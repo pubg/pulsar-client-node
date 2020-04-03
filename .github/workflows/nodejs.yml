@@ -44,9 +44,7 @@ jobs:
         CI: true
     - run: yarn node-pre-gyp package
     - name: Upload GitHub artifacts
-      uses: skx/github-action-publish-binaries@master
-      with:
-        args: 'build/stage/**/*.tar.gz'
+      run: ./upload-to-github-release.sh 'build/stage/**/*.tar.gz'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: github.event_name == 'release' && github.event.action == 'prereleased'
