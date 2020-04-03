@@ -53,7 +53,7 @@
   },
   "binary": {
     "module_name": "Pulsar",
-    "module_path": "./build/{node_abi}-{platform}-{arch}",
+    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}",
     "host": "https://github.com/fretiq/pulsar-client-node/releases/download/",
     "remote_path": "v{version}",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz"
