@@ -52,7 +52,7 @@
     "node-pre-gyp-github": "^1.4.3"
   },
   "binary": {
-    "module_name": "pulsar",
+    "module_name": "Pulsar",
     "module_path": "./build/{node_abi}-{platform}-{arch}",
     "host": "https://github.com/fretiq/pulsar-client-node/releases/download/",
     "remote_path": "{version}",
