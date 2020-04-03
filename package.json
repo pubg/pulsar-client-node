@@ -1,5 +1,5 @@
 {
-  "name": "pulsar-client",
+  "name": "@fretiq/pulsar-client-node",
   "version": "2.0.0-rc.0",
   "description": "Pulsar Node.js client",
   "main": "index.js",
