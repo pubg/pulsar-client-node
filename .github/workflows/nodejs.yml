@@ -11,11 +11,10 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest]
         node-version: [10.x, 12.x]
 
     steps:
@@ -25,9 +24,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://npm.pkg.github.com'
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
+    - run: |
+        curl --output apache-pulsar-client-dev.deb "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client-dev.deb"
+        apt install ./apache-pulsar-client*.deb
     - run: yarn install --frozen-lockfile
     - run: yarn test
       env:
