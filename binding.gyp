@@ -20,7 +20,7 @@
 {
   "targets": [
     {
-      "target_name": "Pulsar",
+      "target_name": "<(module_name)",
       "cflags!": ["-fno-exceptions"],
       "cflags_cc!": ["-fno-exceptions"],
       "include_dirs": ["<!@(node -p \"require('node-addon-api').include\")"],
@@ -40,6 +40,17 @@
         "src/ReaderConfig.cc",
       ],
       "libraries": ["-lpulsar"],
+    },
+    {
+      "target_name": "action_after_build",
+      "type": "none",
+      "dependencies": ["<(module_name)"],
+      "copies": [
+        {
+          "files": ["<(PRODUCT_DIR)/<(module_name).node"],
+          "destination": "<(module_path)"
+        }
+      ]
     }
   ]
 }
