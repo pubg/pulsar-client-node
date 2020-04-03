@@ -28,6 +28,10 @@ jobs:
         curl --output apache-pulsar-client.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client.deb"
         curl --output apache-pulsar-client-dev.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client-dev.deb"
         sudo apt install ./apache-pulsar-client*.deb
+      if: runner.os == 'Linux'
+    - run: |
+        brew install libpulsar
+      if: runner.os == 'macOS'
     - run: yarn install --frozen-lockfile
     - run: |
         ./pulsar-test-service-start.sh
