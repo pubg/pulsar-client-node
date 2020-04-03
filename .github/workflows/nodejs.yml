@@ -8,6 +8,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  release:
+    types: [ prereleased ]
 
 jobs:
   build:
@@ -37,5 +39,31 @@ jobs:
         ./pulsar-test-service-start.sh
         yarn test
         ./pulsar-test-service-stop.sh
+      if: runner.os == 'Linux'
       env:
         CI: true
+    - run: yarn node-pre-gyp package
+    - name: Upload GitHub artifacts
+      uses: Roang-zero1/github-upload-release-artifacts-action@master
+      with:
+        args:
+          - build/stage/**/
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: github.event_name == 'release' && github.event.action == 'prereleased'
+
+  publish:
+    needs: build
+    if: github.event_name == 'release' && github.event.action == 'prereleased'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@fretiq'
+      - run: yarn install
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
