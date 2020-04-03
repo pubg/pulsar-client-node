@@ -27,6 +27,9 @@ static const std::string CFG_EVENT_TIME = "eventTimestamp";
 static const std::string CFG_SEQUENCE_ID = "sequenceId";
 static const std::string CFG_PARTITION_KEY = "partitionKey";
 static const std::string CFG_REPL_CLUSTERS = "replicationClusters";
+static const std::string CFG_DELIVER_AFTER = "deliverAfter";
+static const std::string CFG_DELIVER_AT = "deliverAt";
+static const std::string CFG_ORDERING_KEY = "orderingKey";
 
 Napi::FunctionReference Message::constructor;
 
@@ -185,6 +188,22 @@ pulsar_message_t *Message::BuildMessage(Napi::Object conf) {
       FreeStringArray(arr, length);
     }
   }
+
+  if (conf.Has(CFG_DELIVER_AFTER) && conf.Get(CFG_DELIVER_AFTER).IsNumber()) {
+    Napi::Number deliverAfter = conf.Get(CFG_DELIVER_AFTER).ToNumber();
+    pulsar_message_set_deliver_after(cMessage, deliverAfter.Int64Value());
+  }
+
+  if (conf.Has(CFG_DELIVER_AT) && conf.Get(CFG_DELIVER_AT).IsNumber()) {
+    Napi::Number deliverAt = conf.Get(CFG_DELIVER_AT).ToNumber();
+    pulsar_message_set_deliver_at(cMessage, deliverAt.Int64Value());
+  }
+
+  if (conf.Has(CFG_ORDERING_KEY) && conf.Get(CFG_ORDERING_KEY).IsString()) {
+    Napi::String orderingKey = conf.Get(CFG_ORDERING_KEY).ToString();
+    pulsar_message_set_ordering_key(cMessage, orderingKey.Utf8Value().c_str());
+  }
+
   return cMessage;
 }
 
