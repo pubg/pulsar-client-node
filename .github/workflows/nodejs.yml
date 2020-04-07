@@ -16,8 +16,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        node-version: [10.x, 12.x]
+        os: [ubuntu-latest]
+#        os: [ubuntu-latest, macos-latest]
+        node-version: [10.x]
+#        node-version: [10.x, 12.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -31,13 +33,12 @@ jobs:
       with:
         repository: apache/pulsar
         path: apache-pulsar
-    - name: build cpp artifacts
+    - name: Build C++ client library
       run: |
-        echo "Build C++ client library"
-        export CMAKE_ARGS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_DYNAMIC_LIB=OFF"
+        sudo apt install libboost-all-dev
         cd ./apache-pulsar/pulsar-client-cpp/
         cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON
-        make pulsarShared pulsarSharedNossl pulsarStatic pulsarStaticWithDeps -j8
+        make pulsarStaticWithDeps -j8
         ls ./lib/libpulsar*
     - run: |
         curl --output apache-pulsar-client.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client.deb"
