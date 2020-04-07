@@ -26,6 +26,19 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://npm.pkg.github.com'
+    - name: Checkout pulsar-client-cpp
+      uses: actions/checkout@v2
+      with:
+        repository: apache/pulsar
+        path: apache-pulsar
+    - name: build cpp artifacts
+      run: |
+        echo "Build C++ client library"
+        export CMAKE_ARGS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_DYNAMIC_LIB=OFF"
+        cd ./apache-pulsar/pulsar-client-cpp/
+        cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON
+        make pulsarShared pulsarSharedNossl pulsarStatic pulsarStaticWithDeps -j8
+        ls ./lib/libpulsar*
     - run: |
         curl --output apache-pulsar-client.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client.deb"
         curl --output apache-pulsar-client-dev.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client-dev.deb"
