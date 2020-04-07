@@ -35,7 +35,7 @@ jobs:
         path: apache-pulsar
     - name: Build C++ client library
       run: |
-        sudo apt install libboost-all-dev
+        sudo apt install -y libboost-all-dev
         cd ./apache-pulsar/pulsar-client-cpp/
         cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON
         make pulsarStaticWithDeps -j8
