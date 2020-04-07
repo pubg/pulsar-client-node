@@ -39,7 +39,14 @@
         "src/Reader.cc",
         "src/ReaderConfig.cc",
       ],
-      "libraries": ["-lpulsar"],
+      "conditions":[
+      	["OS=='linux'", {
+      	  "libraries": [ "/usr/lib/libpulsar.a" ]
+      	  }],
+      	["OS=='mac'", {
+      	  "libraries": [ "/usr/local/opt/libpulsar/lib/libpulsar.a" ]
+      	}]
+      ],
     },
     {
       "target_name": "action_after_build",
