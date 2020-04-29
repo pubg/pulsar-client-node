@@ -35,9 +35,9 @@ jobs:
         path: apache-pulsar
     - name: Build C++ client library
       run: |
-        sudo apt install -y libboost-all-dev libprotobuf-dev libcurl4-openssl-dev protobuf-compiler
+        ./linux_deps.sh
         cd ./apache-pulsar/pulsar-client-cpp/
-        cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON
+        cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON -DBUILD_PYTHON_WRAPPER=OFF
         make pulsarStaticWithDeps -j8
         make install
         ls ./lib/libpulsar*
