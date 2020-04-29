@@ -21,7 +21,7 @@ cd ~
     tar xvfz 1.8.0.tar.gz && \
     cd ~/jsoncpp-1.8.0 && \
     cmake . -DCMAKE_POSITION_INDEPENDENT_CODE=ON && \
-    make && make install && \
+    make && sudo make install && \
     rm -rf ~/1.8.0.tar.gz ~/jsoncpp-1.8.0)
 
 # Download and compile protoubf
@@ -30,7 +30,7 @@ cd ~
     tar xvfz protobuf-cpp-3.3.0.tar.gz && \
     cd ~/protobuf-3.3.0/ && \
     CXXFLAGS=-fPIC ./configure && \
-    make && make install && ldconfig && \
+    make && sudo make install && ldconfig && \
     rm -rf ~/protobuf-cpp-3.3.0.tar.gz ~/protobuf-3.3.0)
 
 # ZLib
@@ -39,7 +39,7 @@ cd ~
     tar xvfz v1.2.11.tar.gz && \
     cd ~/zlib-1.2.11 && \
     CFLAGS="-fPIC -O3" ./configure && \
-    make && make install && \
+    make && sudo make install && \
     rm -rf ~/v1.2.11.tar.gz ~/zlib-1.2.11)
 
 # Zstandard
@@ -48,7 +48,7 @@ cd ~
     tar xvfz zstd-1.3.7.tar.gz && \
     cd ~/zstd-1.3.7 && \
     CFLAGS="-fPIC -O3" make -j8 && \
-    make install && \
+    sudo make install && \
     rm -rf ~/zstd-1.3.7 ~/zstd-1.3.7.tar.gz)
 
 
@@ -56,7 +56,7 @@ cd ~
     tar xvfz OpenSSL_1_1_0j.tar.gz && \
     cd ~/openssl-OpenSSL_1_1_0j/ && \
     ./Configure -fPIC --prefix=/usr/local/ssl/ linux-x86_64 && \
-    make && make install && \
+    make && sudo make install && \
     rm -rf ~/OpenSSL_1_1_0j.tar.gz ~/openssl-OpenSSL_1_1_0j)
 
 # LibCurl
@@ -65,5 +65,5 @@ cd ~
     tar xvfz curl-7.61.0.tar.gz && \
     cd ~/curl-7.61.0 && \
     CFLAGS=-fPIC ./configure --with-ssl=/usr/local/ssl/ && \
-    make && make install && \
+    make && make sudo install && \
     rm -rf ~/curl-7.61.0.tar.gz ~/curl-7.61.0)
