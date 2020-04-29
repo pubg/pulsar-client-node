@@ -1,8 +1,10 @@
 #!/bin/bash
 
-sudo apt-get update -y && \
-     apt-get install -y curl g++ make python-dev \
-                libxml2-utils git
+set -eux
+
+sudo apt-get update -y
+sudo apt-get install -y curl g++ make python-dev libxml2-utils git
+
 cd ~
 
 # Download and compile boost
@@ -13,14 +15,6 @@ cd ~
     ./b2 address-model=64 cxxflags=-fPIC link=static threading=multi variant=release install && \
     rm -rf ~/boost_1_64_0.tar.gz ~/boost_1_64_0)
 
-
-(curl -O -L https://github.com/Kitware/CMake/archive/v3.8.2.tar.gz && \
-    tar xvfz v3.8.2.tar.gz && \
-    cd ~/CMake-3.8.2 && \
-    ./configure && \
-    make && make install && \
-    rm -rf ~/v3.8.2.tar.gz ~/CMake-3.8.2)
-
 # Compile JSON CPP
 
 (curl -O -L  https://github.com/open-source-parsers/jsoncpp/archive/1.8.0.tar.gz && \
@@ -30,7 +24,7 @@ cd ~
     make && make install && \
     rm -rf ~/1.8.0.tar.gz ~/jsoncpp-1.8.0)
 
-# Download and copile protoubf
+# Download and compile protoubf
 
 (curl -O -L  https://github.com/google/protobuf/releases/download/v3.3.0/protobuf-cpp-3.3.0.tar.gz && \
     tar xvfz protobuf-cpp-3.3.0.tar.gz && \
@@ -73,6 +67,3 @@ cd ~
     CFLAGS=-fPIC ./configure --with-ssl=/usr/local/ssl/ && \
     make && make install && \
     rm -rf ~/curl-7.61.0.tar.gz ~/curl-7.61.0)
-
-
-sudo apt-get install -y dpkg-dev
