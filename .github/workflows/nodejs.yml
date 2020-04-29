@@ -39,16 +39,20 @@ jobs:
         cd ./apache-pulsar/pulsar-client-cpp/
         cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON
         make pulsarStaticWithDeps -j8
+        make install
         ls ./lib/libpulsar*
-    - run: |
-        curl --output apache-pulsar-client.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client.deb"
-        curl --output apache-pulsar-client-dev.deb -L "https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=pulsar/pulsar-2.5.0/DEB/apache-pulsar-client-dev.deb"
-        sudo apt install ./apache-pulsar-client*.deb
-      if: runner.os == 'Linux'
+    # - run: |
+    #     curl --output apache-pulsar-client.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client.deb"
+    #     curl --output apache-pulsar-client-dev.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client-dev.deb"
+    #     sudo apt install ./apache-pulsar-client*.deb
+    #   if: runner.os == 'Linux'
     - run: |
         brew install libpulsar
       if: runner.os == 'macOS'
-    - run: yarn install --frozen-lockfile
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Build native module
+      run: yarn node-pre-gyp install --build-from-source
     - run: |
         ./pulsar-test-service-start.sh
         yarn test
@@ -56,7 +60,8 @@ jobs:
       if: runner.os == 'Linux' && runner.os == 'macOS' # no tests for now
       env:
         CI: true
-    - run: yarn node-pre-gyp package
+    - name: Package native module
+      run: yarn node-pre-gyp package
     - name: Upload GitHub artifacts
       run: ./upload-to-github-release.sh 'build/stage/**/*.tar.gz'
       env:

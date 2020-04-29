@@ -41,8 +41,8 @@
       ],
       "conditions":[
       	["OS=='linux'", {
-      	  "libraries": [ "/usr/lib/libpulsar.a" ]
-      	  }],
+      	  "libraries": [ "/usr/lib/libpulsarwithdeps.a" ]
+        }],
       	["OS=='mac'", {
       	  "libraries": [ "/usr/local/opt/libpulsar/lib/libpulsar.a" ]
       	}]
