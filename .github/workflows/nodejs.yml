@@ -62,6 +62,10 @@ jobs:
         CI: true
     - name: Package native module
       run: yarn node-pre-gyp package
+    - uses: actions/upload-artifact@v2
+      with:
+        name: npm-package
+        path: build/stage/**/*.tar.gz
     - name: Upload GitHub artifacts
       run: ./upload-to-github-release.sh 'build/stage/**/*.tar.gz'
       env:
