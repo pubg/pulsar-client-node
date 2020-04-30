@@ -28,24 +28,24 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://npm.pkg.github.com'
-    - name: Checkout pulsar-client-cpp
-      uses: actions/checkout@v2
-      with:
-        repository: apache/pulsar
-        path: apache-pulsar
-    - name: Build C++ client library
-      run: |
-        ./linux_deps.sh
-        cd ./apache-pulsar/pulsar-client-cpp/
-        cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON -DBUILD_PYTHON_WRAPPER=OFF
-        make pulsarStaticWithDeps -j8
-        make install
-        ls ./lib/libpulsar*
-    # - run: |
-    #     curl --output apache-pulsar-client.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client.deb"
-    #     curl --output apache-pulsar-client-dev.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client-dev.deb"
-    #     sudo apt install ./apache-pulsar-client*.deb
-    #   if: runner.os == 'Linux'
+    # - name: Checkout pulsar-client-cpp
+    #   uses: actions/checkout@v2
+    #   with:
+    #     repository: apache/pulsar
+    #     path: apache-pulsar
+    # - name: Build C++ client library
+    #   run: |
+    #     ./linux_deps.sh
+    #     cd ./apache-pulsar/pulsar-client-cpp/
+    #     cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON -DBUILD_PYTHON_WRAPPER=OFF
+    #     make pulsarStaticWithDeps -j8
+    #     make install
+    #     ls ./lib/libpulsar*
+    - run: |
+        curl --output apache-pulsar-client.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client.deb"
+        curl --output apache-pulsar-client-dev.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client-dev.deb"
+        sudo apt install ./apache-pulsar-client*.deb
+      if: runner.os == 'Linux'
     - run: |
         brew install libpulsar
       if: runner.os == 'macOS'
