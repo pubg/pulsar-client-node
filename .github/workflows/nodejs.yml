@@ -51,6 +51,7 @@ jobs:
       run: |
         brew update
         sed -i .orig 's/"pulsarStatic"/"pulsarStatic", "pulsarStaticWithDeps"/' "$(brew formula libpulsar)"
+        sed -i .orig 's/"-DBUILD_TESTS=OFF",/"-DBUILD_TESTS=OFF","-DLINK_STATIC=ON",/' "$(brew formula libpulsar)"
         brew cat libpulsar
         brew install --build-from-source libpulsar
       if: runner.os == 'macOS'
