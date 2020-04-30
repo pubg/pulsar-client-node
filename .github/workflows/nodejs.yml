@@ -42,20 +42,20 @@ jobs:
     #     make install
     #     ls ./lib/libpulsar*
     - name: Install Linux libpulsar
+      if: runner.os == 'Linux'
       run: |
         curl --output apache-pulsar-client.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client.deb"
         curl --output apache-pulsar-client-dev.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client-dev.deb"
         sudo apt install ./apache-pulsar-client*.deb
-      if: runner.os == 'Linux'
     - name: Install macOS libpulsar
+      if: runner.os == 'macOS'
       run: |
         brew update
         sed -i .orig 's/"pulsarStatic"/"pulsarStatic", "pulsarStaticWithDeps"/' "$(brew formula libpulsar)"
         sed -i .orig 's/"-DBUILD_TESTS=OFF",/"-DBUILD_TESTS=OFF","-DLINK_STATIC=ON",/' "$(brew formula libpulsar)"
         brew cat libpulsar
-        brew install --build-from-source libpulsar
+        brew install -v --build-from-source libpulsar
         ls /usr/local/opt/libpulsar/lib/
-      if: runner.os == 'macOS'
     - name: Install dependencies
       run: yarn install --frozen-lockfile
     - name: Build native module
