@@ -54,6 +54,7 @@ jobs:
         sed -i .orig 's/"-DBUILD_TESTS=OFF",/"-DBUILD_TESTS=OFF","-DLINK_STATIC=ON",/' "$(brew formula libpulsar)"
         brew cat libpulsar
         brew install --build-from-source libpulsar
+        ls /usr/local/opt/libpulsar/lib/
       if: runner.os == 'macOS'
     - name: Install dependencies
       run: yarn install --frozen-lockfile
