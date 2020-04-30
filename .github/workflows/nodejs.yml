@@ -16,8 +16,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
-#        os: [ubuntu-latest, macos-latest]
+        # os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
         node-version: [10.x]
 #        node-version: [10.x, 12.x]
 
@@ -41,13 +41,17 @@ jobs:
     #     make pulsarStaticWithDeps -j8
     #     make install
     #     ls ./lib/libpulsar*
-    - run: |
+    - name: Install Linux libpulsar
+      run: |
         curl --output apache-pulsar-client.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client.deb"
         curl --output apache-pulsar-client-dev.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client-dev.deb"
         sudo apt install ./apache-pulsar-client*.deb
       if: runner.os == 'Linux'
-    - run: |
-        brew install libpulsar
+    - name: Install macOS libpulsar
+      run: |
+        brew update
+        sed -i 's/"pulsarStatic"/"pulsarStatic", "pulsarStaticWithDeps"/' "$(brew formula libpulsar)"
+        brew install --build-from-source libpulsar
       if: runner.os == 'macOS'
     - name: Install dependencies
       run: yarn install --frozen-lockfile
