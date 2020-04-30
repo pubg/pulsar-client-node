@@ -50,7 +50,7 @@ jobs:
     - name: Install macOS libpulsar
       run: |
         brew update
-        sed -i 's/"pulsarStatic"/"pulsarStatic", "pulsarStaticWithDeps"/' "$(brew formula libpulsar)"
+        sed -i .orig 's/"pulsarStatic"/"pulsarStatic", "pulsarStaticWithDeps"/' "$(brew formula libpulsar)"
         brew install --build-from-source libpulsar
       if: runner.os == 'macOS'
     - name: Install dependencies
