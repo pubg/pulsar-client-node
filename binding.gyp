@@ -44,7 +44,7 @@
       	  "libraries": [ "/usr/lib/libpulsarwithdeps.a" ]
         }],
       	["OS=='mac'", {
-      	  "libraries": [ "/usr/local/opt/libpulsar/lib/libpulsarwithdeps.a" ]
+      	  "libraries": [ "<(module_root_dir)/libpulsarwithdeps.a" ]
       	}]
       ],
     },

@@ -47,15 +47,10 @@ jobs:
         curl --output apache-pulsar-client.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client.deb"
         curl --output apache-pulsar-client-dev.deb -L "https://archive.apache.org/dist/pulsar/pulsar-2.5.1/DEB/apache-pulsar-client-dev.deb"
         sudo apt install ./apache-pulsar-client*.deb
-    - name: Install macOS libpulsar
+    - name: Build macOS libpulsar
       if: runner.os == 'macOS'
       run: |
-        brew update
-        sed -i .orig 's/"pulsarStatic"/"pulsarStatic", "pulsarStaticWithDeps"/' "$(brew formula libpulsar)"
-        sed -i .orig 's/"-DBUILD_TESTS=OFF",/"-DBUILD_TESTS=OFF","-DLINK_STATIC=ON",/' "$(brew formula libpulsar)"
-        brew cat libpulsar
-        brew install -v --build-from-source libpulsar
-        ls /usr/local/opt/libpulsar/lib/
+        ./build_mac.sh
     - name: Install dependencies
       run: yarn install --frozen-lockfile
     - name: Build native module
