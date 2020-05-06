@@ -1,7 +1,7 @@
 #!/bin/bash
 
 brew install curl
-brew install --only-dependencies libpulsar
+brew install libpulsar
 
 tmpdir=$(mktemp -d)
 
