@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+
+cd $(dirname "$0")
 
 brew install curl
 brew install libpulsar
@@ -20,3 +23,4 @@ make pulsarStaticWithDeps -j 3
 popd
 
 cp "${clientdir}/lib/libpulsarwithdeps.a" ./libpulsarwithdeps.a
+rm -r "${tmpdir}"

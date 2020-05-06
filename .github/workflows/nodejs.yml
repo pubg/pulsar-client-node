@@ -16,10 +16,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [ubuntu-latest]
         os: [ubuntu-latest, macos-latest]
-        node-version: [10.x]
-#        node-version: [10.x, 12.x]
+        node-version: [10.x, 12.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,19 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://npm.pkg.github.com'
-    # - name: Checkout pulsar-client-cpp
-    #   uses: actions/checkout@v2
-    #   with:
-    #     repository: apache/pulsar
-    #     path: apache-pulsar
-    # - name: Build C++ client library
-    #   run: |
-    #     ./linux_deps.sh
-    #     cd ./apache-pulsar/pulsar-client-cpp/
-    #     cmake . -DBUILD_TESTS=OFF -DLINK_STATIC=ON -DBUILD_PYTHON_WRAPPER=OFF
-    #     make pulsarStaticWithDeps -j8
-    #     make install
-    #     ls ./lib/libpulsar*
     - name: Install Linux libpulsar
       if: runner.os == 'Linux'
       run: |
@@ -49,8 +34,7 @@ jobs:
         sudo apt install ./apache-pulsar-client*.deb
     - name: Build macOS libpulsar
       if: runner.os == 'macOS'
-      run: |
-        ./build_mac.sh
+      run: ./build-support/build-mac.sh
     - name: Install dependencies
       run: yarn install --frozen-lockfile
     - name: Build native module
@@ -69,10 +53,10 @@ jobs:
         name: npm-package
         path: build/stage/**/*.tar.gz
     - name: Upload GitHub artifacts
-      run: ./upload-to-github-release.sh 'build/stage/**/*.tar.gz'
+      if: github.event_name == 'release' && github.event.action == 'prereleased'
+      run: ./build-support/upload-to-github-release.sh 'build/stage/**/*.tar.gz'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: github.event_name == 'release' && github.event.action == 'prereleased'
 
   publish:
     needs: build
