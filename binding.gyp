@@ -46,7 +46,7 @@
       	["OS=='mac'", {
       	  "libraries": [ "<(module_root_dir)/build-support/libpulsarwithdeps.a" ],
           "xcode_settings": {
-            "MACOSX_DEPLOYMENT_TARGET": "10.7"
+            "MACOSX_DEPLOYMENT_TARGET": "10.13"
           }
       	}]
       ],
