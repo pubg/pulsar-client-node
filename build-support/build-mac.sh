@@ -26,8 +26,6 @@ cmake . -DCMAKE_C_FLAGS_RELEASE=-DNDEBUG -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCM
 
 make pulsarStaticWithDeps -j 3
 
-./build-support/merge_archives.sh libpulsar.a $(pwd)/lib/libpulsarwithdeps.a "/usr/local/opt/openssl/lib/libcrypto.a" "/usr/local/opt/openssl/lib/libssl.a" && mv merged-library/libpulsar.a lib/libpulsarwithdeps.a
-
 popd
 
 cp "${clientdir}/lib/libpulsarwithdeps.a" ./libpulsarwithdeps.a

@@ -44,7 +44,11 @@
       	  "libraries": [ "/usr/lib/libpulsarwithdeps.a" ]
         }],
       	["OS=='mac'", {
-      	  "libraries": [ "<(module_root_dir)/build-support/libpulsarwithdeps.a" ],
+      	  "libraries": [
+            "<(module_root_dir)/build-support/libpulsarwithdeps.a",
+            "/usr/local/opt/openssl/lib/libcrypto.a",
+            "/usr/local/opt/openssl/lib/libssl.a"
+          ],
           "xcode_settings": {
             "MACOSX_DEPLOYMENT_TARGET": "10.13"
           }
