@@ -3,6 +3,10 @@ set -e
 
 cd $(dirname "$0")
 
+export CFLAGS="-mmacosx-version-min=10.7"
+export CXXFLAGS="-mmacosx-version-min=10.7"
+export LDFLAGS="-mmacosx-version-min=10.7"
+
 brew install curl
 brew install libpulsar
 
