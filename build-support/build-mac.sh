@@ -7,18 +7,16 @@ export CFLAGS="-mmacosx-version-min=10.13"
 export CXXFLAGS="-mmacosx-version-min=10.13"
 export LDFLAGS="-mmacosx-version-min=10.13"
 
-brew install curl
-brew install libpulsar
+brew install curl libpulsar
 
 openssl version
 
 tmpdir=$(mktemp -d)
 
-curl --output /tmp/apache-pulsar.tar.gz https://archive.apache.org/dist/pulsar/pulsar-2.5.1/apache-pulsar-2.5.1-src.tar.gz
-
+curl --output /tmp/apache-pulsar.tar.gz https://archive.apache.org/dist/pulsar/pulsar-2.5.2/apache-pulsar-2.5.2-src.tar.gz
 tar -xf /tmp/apache-pulsar.tar.gz -C "${tmpdir}"
 
-clientdir="${tmpdir}/apache-pulsar-2.5.1/pulsar-client-cpp/"
+clientdir="${tmpdir}/apache-pulsar-2.5.2/pulsar-client-cpp/"
 
 pushd "${clientdir}"
 

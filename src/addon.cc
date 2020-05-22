@@ -33,7 +33,8 @@ Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
   Producer::Init(env, exports);
   Consumer::Init(env, exports);
   Reader::Init(env, exports);
-  return Client::Init(env, exports);
+  Client::Init(env, exports);
+  return exports;
 }
 
 NODE_API_MODULE(NODE_GYP_MODULE_NAME, InitAll)
