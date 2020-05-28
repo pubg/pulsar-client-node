@@ -13,7 +13,7 @@ fi
 if ! brew info libpulsar &>/dev/null; then
   brew install libpulsar
 fi
-if ! brew info boost &>/dev/null; then
+if ! brew info boost; then
   brew install boost
 fi
 
@@ -28,7 +28,7 @@ clientdir="${tmpdir}/apache-pulsar-2.5.2/pulsar-client-cpp/"
 
 pushd "${clientdir}"
 
-cmake . -DCMAKE_C_FLAGS_RELEASE=-DNDEBUG -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_BUILD_TYPE=Release -DCMAKE_FIND_FRAMEWORK=LAST -DCMAKE_VERBOSE_MAKEFILE=ON -Wno-dev -DBUILD_TESTS=OFF -DLINK_STATIC=ON -DBUILD_PYTHON_WRAPPER=OFF -DBoost_INCLUDE_DIRS=/usr/local/opt/boost/include
+cmake . -DCMAKE_C_FLAGS_RELEASE=-DNDEBUG -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_BUILD_TYPE=Release -DCMAKE_FIND_FRAMEWORK=LAST -DCMAKE_VERBOSE_MAKEFILE=ON -Wno-dev -DBUILD_TESTS=OFF -DLINK_STATIC=ON -DBUILD_PYTHON_WRAPPER=OFF -DBoost_INCLUDE_DIRS=$(brew --prefix)/opt/boost/include
 
 make pulsarStaticWithDeps -j 3
 
