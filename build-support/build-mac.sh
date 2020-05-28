@@ -7,15 +7,11 @@ export CFLAGS="-mmacosx-version-min=10.13"
 export CXXFLAGS="-mmacosx-version-min=10.13"
 export LDFLAGS="-mmacosx-version-min=10.13"
 
-if ! brew info curl &>/dev/null; then
-  brew install curl
-fi
-if ! brew info libpulsar &>/dev/null; then
-  brew install libpulsar
-fi
-if ! brew info boost; then
-  brew install boost
-fi
+brew bundle --file=- <<-EOS
+brew "curl"
+brew "libpulsar"
+brew "boost"
+EOS
 
 openssl version
 
