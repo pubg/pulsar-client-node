@@ -13,6 +13,9 @@ fi
 if ! brew info libpulsar &>/dev/null; then
   brew install libpulsar
 fi
+if ! brew info boost &>/dev/null; then
+  brew install boost
+fi
 
 openssl version
 
