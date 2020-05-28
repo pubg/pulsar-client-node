@@ -44,13 +44,30 @@
       	  "libraries": [ "/usr/lib/libpulsarwithdeps.a" ]
         }],
       	["OS=='mac'", {
+          "actions": [{
+            "action_name": "build_libpulsar_mac",
+            "inputs": [
+              "<(module_root_dir)/build-support/build-mac.sh"
+            ],
+            "outputs": [
+              "<(module_root_dir)/build-support/libpulsarwithdeps.a"
+            ],
+            "action": ["bash", "build-support/build-mac.sh"]
+          }],
       	  "libraries": [
             "<(module_root_dir)/build-support/libpulsarwithdeps.a",
-            "/usr/local/opt/openssl/lib/libcrypto.a",
-            "/usr/local/opt/openssl/lib/libssl.a"
+            "-lcrypto",
+            "-lssl"
           ],
           "xcode_settings": {
-            "MACOSX_DEPLOYMENT_TARGET": "10.13"
+            "MACOSX_DEPLOYMENT_TARGET": "10.13",
+            "OTHER_LDFLAGS": [
+              "-L/usr/local/opt/openssl/lib"
+            ],
+            "OTHER_CPLUSPLUSFLAGS": [
+              "-I/usr/local/opt/openssl/include",
+              "-std=c++11"
+            ]
           }
       	}]
       ],
