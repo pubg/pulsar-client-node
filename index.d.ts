@@ -175,6 +175,11 @@ export class Message {
      * Getter method of partition key.
      */
     getPartitionKey(): string;
+
+    /**
+     * Getter method of redelivery count.
+     */
+    getRedeliveryCount(): number;
 }
 
 export interface ProducerOpts {

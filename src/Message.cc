@@ -38,12 +38,17 @@ Napi::Object Message::Init(Napi::Env env, Napi::Object exports) {
 
   Napi::Function func = DefineClass(
       env, "Message",
-      {InstanceMethod("getTopicName", &Message::GetTopicName),
-       InstanceMethod("getProperties", &Message::GetProperties), InstanceMethod("getData", &Message::GetData),
-       InstanceMethod("getMessageId", &Message::GetMessageId),
-       InstanceMethod("getPublishTimestamp", &Message::GetPublishTimestamp),
-       InstanceMethod("getEventTimestamp", &Message::GetEventTimestamp),
-       InstanceMethod("getPartitionKey", &Message::GetPartitionKey)});
+      {
+        InstanceMethod("getTopicName", &Message::GetTopicName),
+        InstanceMethod("getProperties", &Message::GetProperties), 
+        InstanceMethod("getData", &Message::GetData),
+        InstanceMethod("getMessageId", &Message::GetMessageId),
+        InstanceMethod("getPublishTimestamp", &Message::GetPublishTimestamp),
+        InstanceMethod("getEventTimestamp", &Message::GetEventTimestamp),
+        InstanceMethod("getPartitionKey", &Message::GetPartitionKey), 
+        InstanceMethod("getRedeliveryCount", &Message::GetRedeliveryCount),
+      }
+  );
 
   constructor = Napi::Persistent(func);
   constructor.SuppressDestruct();
@@ -125,6 +130,14 @@ Napi::Value Message::GetPartitionKey(const Napi::CallbackInfo &info) {
     return env.Null();
   }
   return Napi::String::New(env, pulsar_message_get_partitionKey(this->cMessage));
+}
+
+Napi::Value Message::GetRedeliveryCount(const Napi::CallbackInfo &info) {
+  Napi::Env env = info.Env();
+  if (!ValidateCMessage(env)) {
+    return env.Null();
+  }
+  return Napi::Number::New(env, pulsar_message_get_redelivery_count(this->cMessage));
 }
 
 bool Message::ValidateCMessage(Napi::Env env) {
