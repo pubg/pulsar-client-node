@@ -28,6 +28,10 @@ export type SubscriptionType =
     'Shared' |
     'Failover';
 
+export type SubscriptionInitialPositionType =
+    'Latest' | 
+    'Earliest';
+
 export class AuthenticationTls {
     constructor(authTlsOpts: { certificatePath: string; privateKeyPath: string });
     certificatePath: string;
@@ -390,6 +394,12 @@ export interface SubscribeOpts {
      * The metadata of consumer.
      */
     properties?: MessageProperties;
+
+    /**
+     * InitialPosition at which the cursor will be set when subscribe
+     * Default is `Latest`
+     */
+    subscriptionInitialPosition?: SubscriptionInitialPositionType;
 }
 
 export class Consumer {
