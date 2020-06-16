@@ -304,6 +304,22 @@ export interface ProducerMessage {
      * you should only change this setting if you want to override the broker default.
      */
     replicationClusters?: string[];
+
+    /**
+     * Request to deliver the message only after the specified relative delay.
+     */
+    deliverAfter?: number;
+
+    /**
+     * Deliver the message only at or after the specified absolute timestamp.
+     */
+    deliverAt?: number;
+
+    /**
+     * Sets the ordering key of the message for message dispatch in SubscriptionType.Key_Shared mode.
+     * Partition key Will be used if ordering key not specified.
+     */
+    orderingKey?: string;
 }
 
 export class Producer {
