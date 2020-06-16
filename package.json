@@ -3,6 +3,7 @@
   "version": "2.0.0-rc.11",
   "description": "Pulsar Node.js client",
   "main": "index.js",
+  "types": "index.d.ts",
   "directories": {
     "src": "src",
     "example": "examples"
