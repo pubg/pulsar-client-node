@@ -1,6 +1,6 @@
 {
   "name": "@pubgcorp/pulsar-client",
-  "version": "2.0.0-rc.11",
+  "version": "2.0.0-alpha-3",
   "description": "Pulsar Node.js client",
   "main": "index.js",
   "types": "index.d.ts",
