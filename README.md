@@ -52,7 +52,7 @@ If an incompatible version of the C++ client is installed, you may fail to build
 ### Please install pulsar-client in your project:
 
 ```shell
-$ npm install pulsar-client
+$ npm install @pubgcorp/pulsar-client
 ```
 
 ## Typescript Definitions
@@ -63,14 +63,14 @@ $ npm install @types/pulsar-client --save-dev
 
 ## Sample code
 
-Please refer to [examples](https://github.com/apache/pulsar-client-node/tree/master/examples).
+Please refer to [examples](https://github.com/pubg/pulsar-client-node/tree/master/examples).
 
 ## How to build
 
 ### Install dependent npm modules and build Pulsar client library:
 
 ```shell
-$ git clone https://github.com/apache/pulsar-client-node.git
+$ git clone https://github.com/pubg/pulsar-client-node.git
 $ cd pulsar-client-node
 $ npm install
 ```
